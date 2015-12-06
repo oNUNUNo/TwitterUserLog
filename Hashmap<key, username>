@@ -1,0 +1,41 @@
+import java.io.FileNotFoundException;
+import java.io.PrintWriter;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Scanner;
+
+public class findHandle {
+
+    public static String saveFile = "src/INPUT_to_Sort.txt";
+
+    public static void main(String[] args) throws FileNotFoundException {
+
+        System.out.println("How many usernames would you like to enter?");
+        Scanner arrSize = new Scanner(System.in);
+        if (arrSize.hasNext()) {
+            usernameHash(arrSize.nextInt());
+        }
+    }
+
+    public static void usernameHash(int size) throws FileNotFoundException {
+
+        HashMap<Integer, String> hashMap = new HashMap<Integer, String>();
+        PrintWriter writer = new PrintWriter(saveFile);
+
+        System.out.println("Enter " + size + " usernames here: ");
+
+        for (int key = 1; key <= size; key++) {
+            Scanner scanner = new Scanner(System.in);
+            String username = scanner.next();
+            hashMap.put(key, username);
+                if (key == size) {
+                    writer.append(hashMap.toString());
+                    writer.close();
+                    System.out.println();
+                    System.out.println(size + " usernames SAVED!");
+                    System.out.println("Check: " + saveFile + " for saved usernames!");
+                }
+            }
+        }
+    }
