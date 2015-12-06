@@ -1,0 +1,54 @@
+import java.io.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+
+public class Handle {
+
+    public String name;
+    public static String inputFile = "src/INPUT_to_sort.txt";
+    public static String outputFile = "src/OUTPUT_sorted.txt";
+
+    public Handle(String name){
+        this.name = name;
+    }
+
+    public static void main(String[] args) {
+
+        try {
+            BufferedReader reader = new BufferedReader(new FileReader(inputFile));
+            String nextLine = reader.readLine();
+            ArrayList<Handle> listOfHandles = new ArrayList<Handle>();
+
+            while (nextLine != null){
+                if(!nextLine.equals("\n") && !nextLine.isEmpty()) {
+                    String name = nextLine;
+                    Handle newName = new Handle(name);
+                    listOfHandles.add(newName);
+                }
+                nextLine = reader.readLine();
+            }
+            reader.close();
+
+            Collections.sort(listOfHandles, new Comparator<Handle>(){
+                @Override
+                public int compare(Handle o1, Handle o2) {
+                    return o1.name.compareTo(o2.name);
+                }
+            });
+
+            PrintWriter writer = new PrintWriter(outputFile);
+            for(Handle handle : listOfHandles) {
+                writer.println(handle.name);
+            }
+            writer.close();
+
+        } catch (FileNotFoundException ex) {
+            ex.printStackTrace();
+            System.out.println("No File found :( ");
+        } catch (IOException ioEx) {
+            ioEx.getMessage();
+            System.out.println("IO exception bra.. :( ");
+        }
+    }
+}
