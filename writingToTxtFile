@@ -1,3 +1,4 @@
+
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -7,17 +8,57 @@ import java.util.Scanner;
 
 public class findHandle {
 
-    public static String saveFile = "src/INPUT_to_Sort.txt";
+    public static String saveFile = "src/Data_to_Sort.txt";
 
     public static void main(String[] args) throws FileNotFoundException {
 
+        System.out.println("How many users: ");
+        Scanner scanner = new Scanner(System.in);
+        if(scanner.hasNext()) {
+            int size = scanner.nextInt();
+            users(size);
+        }
+
+        /*
         System.out.println("How many usernames would you like to enter?");
         Scanner arrSize = new Scanner(System.in);
         if (arrSize.hasNext()) {
             usernameHash(arrSize.nextInt());
         }
+        */
     }
 
+
+    public static void users(int size) throws FileNotFoundException {
+        PrintWriter printWriter = new PrintWriter(saveFile);
+        String newLine = "\n";
+        StringBuilder stringBuilder = new StringBuilder();
+
+        System.out.println("Enter " + size + " usernames here: ");
+
+
+        for(int i = 0; i <= size; i++) {
+            Scanner scanner = new Scanner(System.in);
+            if (scanner.hasNext()) {
+                String user = scanner.next();
+                stringBuilder.append(user);
+                stringBuilder.append(newLine);
+
+                //System.out.println(stringBuilder);
+                //stringBuilder.delete(0, size);
+
+                if (i == size - 1) {
+                    printWriter.append(stringBuilder.toString());
+                    System.out.println("SAVED TO: " + saveFile);
+
+                    printWriter.close();
+
+                }
+            }
+        }
+    }
+
+//Hashmap attempt
     public static void usernameHash(int size) throws FileNotFoundException {
 
         HashMap<Integer, String> hashMap = new HashMap<Integer, String>();
