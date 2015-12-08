@@ -1,22 +1,35 @@
 
+import java.io.BufferedWriter;
 import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.text.Collator;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Scanner;
+import java.util.Set;
+import java.util.TreeSet;
+
+import javafx.print.Collation;
 
 public class findHandle {
-
+	
+	private static Path pathToFile = Paths.get("src/Data_to_Sort.txt");
     public static String saveFile = "src/Data_to_Sort.txt";
 
-    public static void main(String[] args) throws FileNotFoundException {
+    public static void main(String[] args){// throws FileNotFoundException {
 
-        System.out.println("How many users: ");
-        Scanner scanner = new Scanner(System.in);
-        if(scanner.hasNext()) {
-            int size = scanner.nextInt();
-            users(size);
+//        System.out.println("How many users: ");
+//        Scanner scanner = new Scanner(System.in);
+//        if(scanner.hasNext()) {
+//            int size = scanner.nextInt();
+//            users(size);
+            userNameSet();
         }
 
         /*
@@ -35,7 +48,7 @@ public class findHandle {
         StringBuilder stringBuilder = new StringBuilder();
 
         System.out.println("Enter " + size + " usernames here: ");
-
+        
 
         for(int i = 0; i <= size; i++) {
             Scanner scanner = new Scanner(System.in);
@@ -79,4 +92,36 @@ public class findHandle {
                 }
             }
         }
-    }
+    
+    public static void userNameSet() 
+    {
+    	Set<String> userSet = new TreeSet<String>(Collator.getInstance());
+    	
+    	System.out.println("Enter" + " usernames here: ");
+      
+    	Scanner scanner = new Scanner(System.in);
+            
+        while(scanner.hasNext()) 
+        {
+        	String user = scanner.next();
+        	userSet.add(user);
+           
+            if(scanner.hasNext("end"))
+            {	
+            	
+                for(String s : userSet)
+        	    {	        	    	
+                	try(BufferedWriter trueWriter = Files.newBufferedWriter(pathToFile, StandardOpenOption.APPEND))
+                	{
+                		trueWriter.write(s + "\n");
+                	}
+                	catch (IOException ex){ex.printStackTrace();}
+                }
+                	System.out.println("SAVED TO: " + saveFile);
+                	break;
+            }
+            
+        }	
+        scanner.close();
+  }
+}
